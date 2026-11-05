@@ -62,6 +62,9 @@ export function fetchUpstream(up: Upstream, ref: string): string {
     encoding: "utf8",
   });
   if (r.status !== 0) {
+    // Nothing of a failed fetch is worth keeping, and the caller never sees
+    // the folder to clean it up.
+    rmSync(dir, { recursive: true, force: true });
     throw new Error(`giget ${source} failed:\n${r.stderr || r.stdout}`);
   }
   return dir;
@@ -112,18 +115,22 @@ if (import.meta.main) {
   try {
     const show = arg("show");
     if (show !== undefined) {
+      // -N treats a file that exists on one side only as empty, so an added
+      // or deleted file shows as a whole-file diff instead of an error.
       const r = spawnSync(
         "diff",
-        ["-u", path.join(upstreamDir, show), path.join(localDir, show)],
+        ["-u", "-N", path.join(upstreamDir, show), path.join(localDir, show)],
         { encoding: "utf8" },
       );
       process.stdout.write(r.stdout);
-      process.exit(r.status === 2 ? 2 : 0);
-    }
-    const diffs = compare(localDir, upstreamDir);
-    if (diffs.length === 0) {
+      if (r.status === 2) {
+        process.stderr.write(r.stderr);
+        process.exitCode = 2;
+      }
+    } else if (compare(localDir, upstreamDir).length === 0) {
       console.log(`${up.local} matches ${up.repo}/${up.path} at ${ref}`);
     } else {
+      const diffs = compare(localDir, upstreamDir);
       console.log(`${up.local} against ${up.repo}/${up.path} at ${ref}:`);
       for (const d of diffs) console.log(`  ${d.state.padEnd(13)} ${d.file}`);
       console.log(
