@@ -1,0 +1,36 @@
+{
+  "name": "parts",
+  "private": true,
+  "description": "A rendered layout gate for component libraries: every element says what it is, and a test measures whether it looks like that. Copy the code in; you own it.",
+  "license": "MIT",
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ]
+  },
+  "type": "module",
+  "scripts": {
+    "type-check": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "lint": "oxlint -c .oxlintrc.json . && bun fmt --check",
+    "check": "bun run type-check && bun run test && bun run lint && bun run check:names",
+    "check:names": "bun scripts/check-names.ts",
+    "fix": "bun fmt && oxlint -c .oxlintrc.json --fix ."
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^21.2.3",
+    "@commitlint/config-conventional": "^21.2.3",
+    "@types/bun": "^1.4.3",
+    "eslint-plugin-sonarjs": "4.2.2",
+    "oxlint": "^1.88.0",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11"
+  },
+  "engines": {
+    "bun": ">=1.4.4"
+  },
+  "packageManager": "bun@1.4.4",
+  "//trustedDependencies": "Empty on purpose, and keep the key: deleting it turns bun's default trust list back on.",
+  "trustedDependencies": []
+}
