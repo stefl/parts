@@ -10,15 +10,15 @@ export function Band({ children }: Readonly<{ children: ReactNode }>) {
   );
 }
 
-/** Words that introduce what follows. Inside a band the heading takes the
- * rows' inset so it starts on the titles' edge. */
+/** Words that introduce what follows. Inside a band over a list the heading
+ * takes the rows' inset as a margin, so its box starts on the titles' edge. */
 export function Heading({
   children,
   inset = false,
 }: Readonly<{ children: ReactNode; inset?: boolean }>) {
   return (
     <h2
-      className={inset ? "px-3 text-title text-ink" : "text-title text-ink"}
+      className={inset ? "mx-3 text-title text-ink" : "text-title text-ink"}
       {...part("heading")}
     >
       {children}

@@ -8,8 +8,8 @@ import { defineConfig } from "vitest/config";
 import {
   readPartsBaseline,
   writePartsBaseline,
-} from "../../packages/parts/gate/commands";
-import { partsUpdateDefine } from "../../packages/parts/storybook/define";
+} from "../../packages/parts/gate/commands.ts";
+import { partsUpdateDefine } from "../../packages/parts/storybook/define.ts";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 

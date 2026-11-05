@@ -11,7 +11,10 @@ export default definePart({
     // edges, and the eye reads two lists.
     { kind: "aligns-left", with: "row.title", scope: "list" },
   ],
+  // A margin, not padding: the label's box edge is what the contract reads,
+  // and padding sits inside the box. The margin moves the box onto the
+  // titles' edge.
   style: {
-    label: "px-3 pt-3 pb-1",
+    label: "mx-3 pt-3 pb-1",
   },
 });

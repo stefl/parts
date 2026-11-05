@@ -5,7 +5,16 @@ export default definePart({
   purpose: "A section of a page: a heading and what it introduces.",
   level: 0,
   within: [],
-  contains: ["heading", "list", "prose", "card", "empty", "bar", "control"],
+  contains: [
+    "heading",
+    "list",
+    "prose",
+    "card",
+    "empty",
+    "bar",
+    "control",
+    "field",
+  ],
   contracts: [
     // Inside a band, things sit 8, 16 or 24px apart. 32px is the step
     // between bands, so a gap of 32 inside one makes its parts read as

@@ -12,7 +12,7 @@ const tabs = [
 ];
 
 const board = (
-  <div className="flex flex-col gap-6" data-part="band">
+  <>
     <Bar
       tabs={<Tabs tabs={tabs} current="Open" />}
       control={
@@ -31,12 +31,12 @@ const board = (
         <Row title="Move the archive to its own route" meta="Paused · 3d ago" />
       </List>
     </Band>
-  </div>
+  </>
 );
 
 const meta = {
   title: "Screen",
-  decorators: [storyFrame("w-[720px] p-6")],
+  decorators: [storyFrame("flex w-[720px] flex-col gap-6 p-6")],
 } satisfies Meta;
 
 export default meta;
@@ -45,6 +45,6 @@ type Story = StoryObj<typeof meta>;
 export const Board: Story = { render: () => board };
 
 export const BoardDark: Story = {
-  decorators: [storyFrame("dark bg-bg p-6")],
+  decorators: [storyFrame("dark flex flex-col gap-6 bg-bg p-6")],
   render: () => board,
 };
