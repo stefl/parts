@@ -1,0 +1,9 @@
+[install]
+# Isolated (pnpm-style) linker: each package sees only its declared deps.
+linker = "isolated"
+# One physical copy of each package per machine; worktrees link into it.
+# CI sets BUN_INSTALL_GLOBAL_STORE=0: runners start empty, and symlinks into
+# ~/.bun break anything that packages node_modules.
+globalStore = true
+# 48 hours, in seconds. bun skips any npm version published more recently.
+minimumReleaseAge = 172800
