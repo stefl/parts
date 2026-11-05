@@ -3,13 +3,9 @@
 // needs a different attribute name or a different idea of "this element
 // lays itself out" changes one place.
 
-/** Says whether an element does layout of its own (margin, padding, gap).
- * The box walk calls it once per rendered element; an element it says yes
- * to, with no part of its own, counts as unclassified. */
-export type LayoutDetector = (
-  el: Element,
-  style: CSSStyleDeclaration,
-) => boolean;
+import type { LayoutDetector } from "./walk/layout-detector";
+
+export type { LayoutDetector };
 
 export type PartsOptions = Readonly<{
   /** The attribute that carries a part name. `data-part` by default; some

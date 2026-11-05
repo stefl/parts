@@ -1,6 +1,14 @@
 // How the box walk decides that an element lays itself out. Two detectors
 // ship; a project picks one in its options (config.ts) or writes its own.
-import type { LayoutDetector } from "../config";
+/** Says whether an element does layout of its own (margin, padding, gap).
+ * The box walk calls it once per rendered element; an element it says yes
+ * to, with no part of its own, counts as unclassified. Defined here, not in
+ * config.ts, so this folder stands alone when a project takes only the
+ * walk. */
+export type LayoutDetector = (
+  el: Element,
+  style: CSSStyleDeclaration,
+) => boolean;
 
 /** One class token that does its own layout: optional variant prefixes
  * (`@lg:`, `hover:`), then a margin, padding, gap or space utility. Any
