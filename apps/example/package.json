@@ -9,7 +9,8 @@
     "test": "vitest run",
     "parts:update": "PARTS_UPDATE=1 vitest run",
     "gen:parts": "bun ../../packages/parts/registry/manifest.ts src/parts",
-    "check:parts": "bun scripts/check-parts.ts"
+    "check:parts": "bun scripts/check-parts.ts",
+    "parts:review": "bun scripts/parts-review.ts"
   },
   "dependencies": {
     "@fontsource-variable/jetbrains-mono": "5.3.0",
