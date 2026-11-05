@@ -14,4 +14,5 @@ Nothing yet. The engine is being moved in; the first ideas will follow it.
 
 ### 2026-11-05
 
+- `packages/parts`: the engine (fourteen contract kinds, the grammar, the context), the registry helpers (`types`, `definePart`, the manifest generator), the box walk with two layout detectors, the gate and sidecar plumbing, the Storybook hook as a function, the vitest define, and the static checks behind `runChecks`. Moved from the first codebase with every reference to it removed; 2,600 source lines and 2,200 test lines. The attribute name and the layout detector are the two configuration points (`config.ts`).
 - The repository: tooling, this changelog, the first decision record (adopters copy the code in; Parts is a pattern repo, not a library), the README and a stub of the adoption guide.
