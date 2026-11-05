@@ -1,0 +1,166 @@
+@import "tailwindcss";
+@import "@fontsource-variable/schibsted-grotesk";
+@import "@fontsource-variable/jetbrains-mono";
+/* Tailwind must scan the part files: the primitives' classes are literals
+ * there. */
+@source "./parts";
+
+/*
+ * Tokens. One dark anchor hue, one accent hue; every neutral is the anchor
+ * at low chroma, so the greys lean the same way. Never pure black or white.
+ * Light is the canonical theme; `.dark` on the root or any wrapper carries
+ * the dark values, and the system preference applies them when no class
+ * says otherwise.
+ */
+:root {
+  --hue-ink: 255;
+  --hue-accent: 174;
+  --measure: 64ch;
+  --row-height: 44px;
+}
+
+:root,
+.light {
+  color-scheme: light;
+  --bg: oklch(96.8% 0.004 var(--hue-ink));
+  --surface: oklch(99.2% 0.002 var(--hue-ink));
+  --panel: oklch(95.6% 0.005 var(--hue-ink));
+  --hover: oklch(93.6% 0.006 var(--hue-ink));
+  --line: oklch(89.5% 0.006 var(--hue-ink));
+  --ink: oklch(24% 0.018 var(--hue-ink));
+  --ink-2: oklch(41% 0.014 var(--hue-ink));
+  --ink-3: oklch(51.5% 0.012 var(--hue-ink));
+  --on-ink: oklch(98.5% 0.003 var(--hue-ink));
+  --accent-text: oklch(48% 0.14 var(--hue-accent));
+  --accent-solid: oklch(57% 0.161 var(--hue-accent));
+  --shadow-lift:
+    0 1px 2px oklch(24% 0.018 var(--hue-ink) / 6%),
+    0 4px 12px oklch(24% 0.018 var(--hue-ink) / 6%);
+}
+
+.dark {
+  color-scheme: dark;
+  --bg: oklch(17% 0.012 var(--hue-ink));
+  --surface: oklch(21% 0.012 var(--hue-ink));
+  --panel: oklch(25% 0.012 var(--hue-ink));
+  --hover: oklch(29% 0.012 var(--hue-ink));
+  --line: oklch(33% 0.012 var(--hue-ink));
+  --ink: oklch(94% 0.006 var(--hue-ink));
+  --ink-2: oklch(78% 0.008 var(--hue-ink));
+  --ink-3: oklch(66% 0.01 var(--hue-ink));
+  --on-ink: oklch(17% 0.012 var(--hue-ink));
+  --accent-text: oklch(80% 0.14 var(--hue-accent));
+  --accent-solid: oklch(72% 0.16 var(--hue-accent));
+  --shadow-lift: 0 1px 2px oklch(0% 0 0 / 40%), 0 4px 12px oklch(0% 0 0 / 40%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+    --bg: oklch(17% 0.012 var(--hue-ink));
+    --surface: oklch(21% 0.012 var(--hue-ink));
+    --panel: oklch(25% 0.012 var(--hue-ink));
+    --hover: oklch(29% 0.012 var(--hue-ink));
+    --line: oklch(33% 0.012 var(--hue-ink));
+    --ink: oklch(94% 0.006 var(--hue-ink));
+    --ink-2: oklch(78% 0.008 var(--hue-ink));
+    --ink-3: oklch(66% 0.01 var(--hue-ink));
+    --on-ink: oklch(17% 0.012 var(--hue-ink));
+    --accent-text: oklch(80% 0.14 var(--hue-accent));
+    --accent-solid: oklch(72% 0.16 var(--hue-accent));
+    --shadow-lift:
+      0 1px 2px oklch(0% 0 0 / 40%), 0 4px 12px oklch(0% 0 0 / 40%);
+  }
+}
+
+@theme inline {
+  --color-*: initial;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-panel: var(--panel);
+  --color-hover: var(--hover);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-on-ink: var(--on-ink);
+  --color-accent-text: var(--accent-text);
+  --color-accent-solid: var(--accent-solid);
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --shadow-card: var(--shadow-lift);
+}
+
+@theme {
+  --font-sans:
+    "Schibsted Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:
+    "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Type roles. Every line height is a multiple of 4px. */
+  --text-*: initial;
+  --text-meta: 0.8125rem; /* 13/16: the quiet line */
+  --text-meta--line-height: 1rem;
+  --text-data: 0.875rem; /* 14/20: rows, controls, labels */
+  --text-data--line-height: 1.25rem;
+  --text-copy: 0.875rem; /* 14/22: prose on the measure */
+  --text-copy--line-height: 1.375rem;
+  --text-title: 0.9375rem; /* 15/20, 600: a section heading */
+  --text-title--line-height: 1.25rem;
+  --text-title--font-weight: 600;
+  --text-title--letter-spacing: -0.005em;
+  --text-page: 1.125rem; /* 18/24, 600: the one page title */
+  --text-page--line-height: 1.5rem;
+  --text-page--font-weight: 600;
+  --text-page--letter-spacing: -0.01em;
+
+  /* Radii are concentric: a card is 20 with a 12 inset, so what sits
+   * inside it is 8; a control is 8; a row is 10 and never meets an edge. */
+  --radius-*: initial;
+  --radius-control: 8px;
+  --radius-row: 10px;
+  --radius-card: 20px;
+  --radius-card-inner: 8px;
+
+  --spacing-row: var(--row-height);
+  --container-measure: var(--measure);
+
+  --default-transition-duration: 140ms;
+  --default-transition-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-data);
+    line-height: var(--text-data--line-height);
+    -webkit-font-smoothing: antialiased;
+  }
+  code,
+  kbd {
+    font-family: var(--font-mono);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent-solid);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition-duration: 0s !important;
+    }
+  }
+}
+
+/* Two spacing tokens between the 4px steps, so a control is 32px high at
+ * 14/20 and an icon sits 6px from its word. */
+@utility p-control {
+  padding: 6px 12px;
+}
+@utility gap-glyph {
+  gap: 6px;
+}

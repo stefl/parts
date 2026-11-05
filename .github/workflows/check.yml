@@ -1,4 +1,6 @@
-# The one gate: `bun run check`, the same command every agent runs locally.
+# The one gate: `bun run check`, the same command every agent runs locally,
+# plus the example app's Storybook browser project (the rendered parts gate),
+# which needs Chromium and so runs as its own job.
 name: check
 
 on:
@@ -30,6 +32,34 @@ jobs:
           # break anything that packages node_modules.
           BUN_INSTALL_GLOBAL_STORE: "0"
       - run: bun run check
+
+  # Every story rendered in Chromium with the parts gate after each one.
+  example:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: .bun-version
+      - run: bun install --frozen-lockfile
+        env:
+          BUN_INSTALL_GLOBAL_STORE: "0"
+      # Keyed on the resolved playwright version, not the whole lockfile, so
+      # an unrelated dependency bump keeps the cache warm. The install runs
+      # unconditionally: with a warm cache it is a fast no-op.
+      - id: playwright
+        run: echo "version=$(grep -oE '"playwright@[0-9][^"]*"' bun.lock | head -1 | tr -d '"' | cut -d@ -f2)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}-v1
+      # Run where playwright is a dependency, so the browser build matches the
+      # pinned package.
+      - run: bunx playwright install chromium
+        working-directory: apps/example
+      - run: bun run test
+        working-directory: apps/example
 
   # Squash-merge makes the PR title main's commit subject, so lint the title.
   commit-style:

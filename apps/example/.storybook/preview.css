@@ -1,0 +1,14 @@
+/* Storybook only: the outermost `.dark` in a story paints the whole viewport
+ * in its own ground, so a padded layout outside it leaves no light strip. */
+#storybook-root .dark:not(.dark .dark) {
+  color-scheme: dark;
+  min-height: 100vh;
+}
+
+#storybook-root .dark:not(.dark .dark)::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--bg);
+}
