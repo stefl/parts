@@ -11,12 +11,16 @@
   },
   "type": "module",
   "scripts": {
-    "type-check": "tsc -p tsconfig.json && tsc -p packages/parts/tsconfig.json",
+    "type-check": "tsc -p tsconfig.json && tsc -p packages/parts/tsconfig.json && bun run --cwd apps/example type-check",
     "test": "vitest run",
     "lint": "oxlint -c .oxlintrc.json . && bun fmt --check",
-    "check": "bun run type-check && bun run test && bun run lint && bun run check:names",
+    "check": "bun run type-check && bun run test && bun run lint && bun run check:names && bun run check:parts",
     "check:names": "bun scripts/check-names.ts",
-    "fix": "bun fmt && oxlint -c .oxlintrc.json --fix ."
+    "fix": "bun fmt && oxlint -c .oxlintrc.json --fix .",
+    "check:parts": "bun run --cwd apps/example check:parts",
+    "test:example": "bun run --cwd apps/example test",
+    "parts:update": "bun run --cwd apps/example parts:update",
+    "gen:parts": "bun run --cwd apps/example gen:parts"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.3",

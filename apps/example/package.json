@@ -1,0 +1,35 @@
+{
+  "name": "example",
+  "private": true,
+  "description": "A small Storybook that runs the parts gate on itself.",
+  "type": "module",
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "type-check": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "parts:update": "PARTS_UPDATE=1 vitest run",
+    "gen:parts": "bun ../../packages/parts/registry/manifest.ts src/parts",
+    "check:parts": "bun scripts/check-parts.ts"
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "5.3.0",
+    "@fontsource-variable/schibsted-grotesk": "5.3.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "10.6.2",
+    "@storybook/addon-vitest": "10.6.2",
+    "@storybook/react-vite": "10.6.2",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "@vitest/browser-playwright": "^4.1.11",
+    "playwright": "^1.64.0",
+    "storybook": "10.6.2",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.4",
+    "vitest": "^4.1.11"
+  }
+}
