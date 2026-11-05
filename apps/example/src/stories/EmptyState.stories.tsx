@@ -19,6 +19,7 @@ export const UnderHeading: Story = {
       <Heading inset>Paused</Heading>
       <List>
         <EmptyState
+          as="li"
           title="Nothing paused"
           description="A row lands here when you pause it from its card."
         />
@@ -31,7 +32,7 @@ export const InGroup: Story = {
   render: () => (
     <List>
       <GroupLabel>Later</GroupLabel>
-      <EmptyState title="Nothing for later yet" />
+      <EmptyState as="li" title="Nothing for later yet" />
     </List>
   ),
 };

@@ -2,5 +2,9 @@
   "ladder": {
     "unclassified": 0,
     "violations": 0
+  },
+  "one-height": {
+    "unclassified": 0,
+    "violations": 0
   }
 }

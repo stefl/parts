@@ -5,10 +5,10 @@ import {
   baselinePathFor,
   stableStringify,
   type PartsBaseline,
-} from "./sidecar";
+} from "./sidecar.ts";
 import type { BrowserCommand } from "vitest/node";
 
-export type { PartsBaseline, PartsBaselineEntry } from "./sidecar";
+export type { PartsBaseline, PartsBaselineEntry } from "./sidecar.ts";
 
 declare module "vitest/browser" {
   interface BrowserCommands {
